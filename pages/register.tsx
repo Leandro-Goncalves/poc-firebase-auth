@@ -3,7 +3,7 @@ import { setCookie } from "nookies";
 
 import styles from "../styles/Home.module.css";
 import { auth, signInWithGoogle } from "../firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((credential) => {
         const { user } = credential;
 
@@ -23,15 +23,16 @@ const Home: NextPage = () => {
 
         router.push("/pages/private");
       })
-      .catch(() => {
+      .catch((err) => {
         console.log("login failed");
+        console.log(err);
       });
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <h1>Login</h1>
+        <h1>Register</h1>
         <input
           placeholder="E-mail"
           type="email"
@@ -47,9 +48,9 @@ const Home: NextPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className={styles.button} onClick={handleLogin}>
-          Login
+          Register
         </button>
-        <h3>Social login</h3>
+        <h3>Social Register</h3>
         <button className={styles.button} onClick={signInWithGoogle}>
           Google
         </button>
