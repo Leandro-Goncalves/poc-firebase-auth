@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
-  return <div>asd</div>;
+  return <div>Logged</div>;
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
