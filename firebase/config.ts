@@ -14,16 +14,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-const privider = new GoogleAuthProvider();
-
-export const signInWithGoogle = () => {
-  signInWithPopup(auth, privider)
-    .then((result) => {
-      const { user } = result;
-      console.log(user);
-      user.getIdToken().then((token) => {
-        setCookie(null, "token", token);
-      });
-    })
-    .catch((error) => {});
-};
+export const privider = new GoogleAuthProvider();

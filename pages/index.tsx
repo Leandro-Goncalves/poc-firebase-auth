@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 import { setCookie } from "nookies";
 
 import styles from "../styles/Home.module.css";
-import { auth, signInWithGoogle } from "../firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, privider } from "../firebase/config";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -11,6 +11,19 @@ const Home: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, privider)
+      .then((result) => {
+        const { user } = result;
+        console.log(user);
+        user.getIdToken().then((token) => {
+          setCookie(null, "token", token);
+          router.push("/pages/private");
+        });
+      })
+      .catch((error) => {});
+  };
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)

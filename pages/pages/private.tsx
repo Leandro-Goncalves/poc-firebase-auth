@@ -1,5 +1,4 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { auth, signInWithGoogle } from "../../firebase/config";
 import { parseCookies } from "nookies";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
