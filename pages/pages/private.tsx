@@ -1,22 +1,12 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { parseCookies } from "nookies";
-import {
-  createUserWithEmailAndPassword,
-  signInWithCustomToken,
-  signOut,
-} from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "../../firebase/config";
-import { useAuthState } from "react-firebase-hooks/auth";
 
-const Home: NextPage = () => {
-  const cookies = parseCookies();
-  const [user, loading, error] = useAuthState(auth);
+type HomeProps = {
+  token: string;
+};
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-  return <div>Logged</div>;
+const Home: NextPage<HomeProps> = ({ token }) => {
+  return <div>{token}</div>;
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -29,7 +19,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   }
-  return { props: {} };
+  return {
+    props: {
+      token: cookies.token,
+    },
+  };
 };
 
 export default Home;
